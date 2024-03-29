@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import { AsyncPaginate } from "react-select-async-paginate";
 import { GEO_API_URL, geoApiOptions } from "./api";
 
-const SearchBar = () => {
+const SearchBar = ({onSearchChange}) => {
     const [cityData, setCityData] = useState(null);
 
     const handleOnChange = (cityName) => {
         setCityData(cityName);
+        onSearchChange(cityName);
     }
 
     const loadOptions = async (inputValue) => {

@@ -1,0 +1,27 @@
+.main-weather {
+    display:flex;
+    border:1px solid red;
+    padding:10px;
+}
+
+.weather-icon {
+    width:56px;
+    height:48px;
+}
+
+.weather-info {
+    width:100%;
+}
+
+.weather-info .section {
+    display:flex;
+    justify-content: space-between;
+}
+
+.weather-info .city-info {
+    font-size:24px;
+}
+
+.weather-info .temperature-info, .weather-info .time-info {
+    font-size:20px;
+}
