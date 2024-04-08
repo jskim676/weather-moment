@@ -1,18 +1,56 @@
+import React, { useEffect, useState } from 'react';
+import Modal from 'react-modal';
 import './App.css';
 import MainWeather from './components/mainWeather/main-weather';
 import SearchBar from './components/searchBar';
+import { WEATHER_API_URL, WEATHER_API_KEY } from './components/api';
+import MyModal from './components/modal/modal';
+import SubWeather from './components/subWeather/sub-weather';
+
+Modal.setAppElement('#root');
 
 function App() {
+  const [currentWeather, setCurrentWeather] = useState(null);
+  const [forecast, setForecast] = useState(null);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
   const getWeatherData = (cityData) => {
     const [latitude, longitude] = cityData.value.split(" ");
-    console.log(latitude);
-    console.log(longitude);
+
+    const currentWeatherFetch = fetch(
+      `${WEATHER_API_URL}/weather?lat=${latitude}&lon=${longitude}&appid=${WEATHER_API_KEY}&units=metric`
+    );
+    const forecastFetch = fetch(
+      `${WEATHER_API_URL}/forecast?lat=${latitude}&lon=${longitude}&appid=${WEATHER_API_KEY}&units=metric`
+    );
+
+    Promise.all([currentWeatherFetch, forecastFetch])
+    .then(async (response) => {
+      const weatherResponse = await response[0].json();
+      const forcastResponse = await response[1].json();
+
+
+      setCurrentWeather({ city: cityData.label, ...weatherResponse });
+      setForecast({ city: cityData.label, ...forcastResponse });
+    })
+    .catch(console.log);
   }
+
+  
+  const handleModalCancel = () => setModalIsOpen(false);
 
   return (
     <div className="container">
         <MainWeather/>
-        <SearchBar onSearchChange={getWeatherData}/>
+        <SearchBar 
+          getCityName={getWeatherData} 
+          modalSwitch={setModalIsOpen}
+        />
+        <MyModal 
+          isOpen={modalIsOpen} 
+          onCancel={handleModalCancel} 
+          data={currentWeather}
+        />
+        <SubWeather/>
     </div>
   );
 }
