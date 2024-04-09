@@ -5,6 +5,7 @@ import "./main-weather.css"
 
 const MainWeather = () => {
     const [mainWeather, setMainWeather] = useState(null);
+    
 
     useEffect(() => {
         const mainLocation = localStorage.getItem("mainLocation");
@@ -27,7 +28,7 @@ const MainWeather = () => {
         currTime = moment().utcOffset(timezoneInMinutes).format("A h:mm");
     }
 
-console.log(mainWeather);
+
 
     return (
         <div className="main-weather">

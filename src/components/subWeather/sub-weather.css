@@ -1,7 +1,15 @@
 .sub-weather {
-    display:flex;
     border:1px solid red;
     padding:10px;
+}
+
+.sub-weather-list {
+    display:grid;
+    grid-template-columns: repeat(3,1fr);
+}
+
+.sub-weather-item {
+    /* padding:10px; */
 }
 
 .weather-icon {
