@@ -6,7 +6,6 @@ import "./main-weather.css"
 const MainWeather = () => {
     const [mainWeather, setMainWeather] = useState(null);
     
-
     useEffect(() => {
         const mainLocation = localStorage.getItem("mainLocation");
         if (mainLocation) {
@@ -18,7 +17,8 @@ const MainWeather = () => {
                 })
                 .catch(console.log);
         }
-    }, [localStorage.getItem("mainLocation")]);
+    }, []);
+
 
     let timezoneInMinutes = 0;
     let currTime = "";
@@ -32,9 +32,9 @@ const MainWeather = () => {
 
     return (
         <div className="main-weather">
-            {mainWeather && (
+            {mainWeather ? 
                 <>
-                    <img className="weather-icon" src={`icon/clear-day.svg`} alt="weather icon" />
+                    <img className="main-weather-icon" src={`icon/clear-day.svg`} alt="weather icon" />
                     <div className="weather-info">
                         <div className="section">
                             <p className="city-info">{mainWeather.city}</p>
@@ -43,7 +43,11 @@ const MainWeather = () => {
                         <p className="time-info">{currTime}</p>
                     </div>
                 </>
-            )}
+                :
+                <div className="main-empty-weather">
+                    <img className="add-icon" src={`icon/add-plus.svg`} alt="add icon" />
+                </div>
+            }
         </div>
     )
 }

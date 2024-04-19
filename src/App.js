@@ -11,7 +11,6 @@ Modal.setAppElement('#root');
 
 function App() {
   const [currentWeather, setCurrentWeather] = useState(null);
-  const [forecast, setForecast] = useState(null);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const getWeatherData = (cityData) => {
     const [latitude, longitude] = cityData.value.split(" ");
@@ -19,18 +18,12 @@ function App() {
     const currentWeatherFetch = fetch(
       `${WEATHER_API_URL}/weather?lat=${latitude}&lon=${longitude}&appid=${WEATHER_API_KEY}&units=metric`
     );
-    const forecastFetch = fetch(
-      `${WEATHER_API_URL}/forecast?lat=${latitude}&lon=${longitude}&appid=${WEATHER_API_KEY}&units=metric`
-    );
 
-    Promise.all([currentWeatherFetch, forecastFetch])
+    Promise.all([currentWeatherFetch])
     .then(async (response) => {
       const weatherResponse = await response[0].json();
-      const forcastResponse = await response[1].json();
-
 
       setCurrentWeather({ city: cityData.label, ...weatherResponse });
-      setForecast({ city: cityData.label, ...forcastResponse });
     })
     .catch(console.log);
   }

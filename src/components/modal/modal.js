@@ -10,14 +10,19 @@ const MyModal = ({ isOpen, onCancel, data }) => {
     };
 
     const handleSubButtonClick = () => {
-        // 저장된 서브 버튼이 6개 미만인 경우에만 저장
         if (subButtonCount < 6) {
-            const count = subButtonCount + 1;
-            localStorage.setItem(`sub${count}Location`, [data.coord.lat, data.coord.lon]);
-            localStorage.setItem(`sub${count}City`, data.city);
-            setSubButtonCount(count);
+            let count = subButtonCount + 1;
+            while (count <= 6) {
+                if (!localStorage.getItem(`sub${count}Location`)) {
+                    localStorage.setItem(`sub${count}Location`, [data.coord.lat, data.coord.lon]);
+                    localStorage.setItem(`sub${count}City`, data.city);
+                    setSubButtonCount(count);
+                    break; 
+                }
+                count++;
+            }   
         } else {
-            console.log("서브 버튼은 최대 6개까지 저장됩니다.");
+            alert("서브 날씨는 최대 6개까지 저장됩니다.");
         }
     };
 

@@ -5,7 +5,6 @@ import "./sub-weather.css"
 
 const SubWeather = () => {
     const [subWeatherList, setSubWeatherList] = useState([]);
-    const localStorageKeys = Array.from({ length: 6 }, (_, i) => `sub${i + 1}Location`);
 
     useEffect(() => {
         const fetchDataForLocation = async (location, city) => {
@@ -34,7 +33,7 @@ const SubWeather = () => {
         };
 
         fetchSubWeatherData();
-    }, [localStorageKeys]); 
+    }, []); 
 
     const formatTimeForLocation = (timezone) => {
         const timezoneInMinutes = Number(timezone) / 60;
@@ -47,7 +46,7 @@ const SubWeather = () => {
                 {subWeatherList.map((subWeather, index) => (
                     subWeather && (
                         <div key={index} className="sub-weather-item">
-                            <img className="weather-icon" src={`icon/clear-day.svg`} alt="weather icon" />
+                            <img className="sub-weather-icon" src={`icon/clear-day.svg`} alt="weather icon" />
                             <div className="weather-info">
                                 <div className="section">
                                     <p className="city-info">{subWeather.city}</p>
@@ -58,6 +57,13 @@ const SubWeather = () => {
                         </div>
                     )
                 ))}
+                {subWeatherList.length < 6 &&
+                    <div className="sub-weather-item">
+                        <div className="sub-empty-weather">
+                            <img className="add-icon" src={`icon/add-plus.svg`} alt="add icon" />
+                        </div>
+                    </div>
+                }
             </div>
         </div>
     )

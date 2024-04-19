@@ -1,6 +1,5 @@
 .sub-weather {
-    border:1px solid red;
-    padding:10px;
+
 }
 
 .sub-weather-list {
@@ -9,13 +8,26 @@
 }
 
 .sub-weather-item {
-    /* padding:10px; */
+    height:180px;
+    padding:10px;
+    display:flex;
+    align-items: center;
+    border:1px solid gray;
+    border-radius: 5px;
 }
 
-.weather-icon {
-    width:56px;
-    height:48px;
+.sub-weather-icon {
+    width:84px;
+    height:72px;
 }
+
+.sub-empty-weather {
+    width:100%;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
 
 .weather-info {
     width:100%;
